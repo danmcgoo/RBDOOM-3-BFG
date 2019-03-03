@@ -631,7 +631,8 @@ idMultiplayerGame::GameTime
 const char* idMultiplayerGame::GameTime()
 {
 	static char buff[16];
-	int m, s, t, ms;
+	unsigned int m, s, t;
+	int ms;
 	
 	if( gameState == COUNTDOWN )
 	{
@@ -653,7 +654,9 @@ const char* idMultiplayerGame::GameTime()
 		}
 		else
 		{
-			sprintf( buff, "WMP %i", s );
+			snprintf( buff, 16, "WMP %i", s );
+			buff[15] = 0;
+
 		}
 	}
 	else
@@ -678,7 +681,8 @@ const char* idMultiplayerGame::GameTime()
 		t = s / 10;
 		s -= t * 10;
 		
-		sprintf( buff, "%i:%i%i", m, t, s );
+		snprintf( buff, 16, "%i:%i%i", m, t, s );
+		buff[15] = 0;
 	}
 	return &buff[0];
 }

@@ -1503,16 +1503,17 @@ void WI_loadData(void)
 {	
 	int		i;
 	int		j;
-	char	name[9];
+	char	name[20];
 	anim_t*	a;
 
-	if (::g->gamemode == commercial)
+	if (::g->gamemode == commercial) {
 		strcpy(name, "INTERPIC");
 		// DHM - Nerve :: Use our background image
 		//strcpy(name, "DMENUPIC");
-	else 
-		sprintf(name, "WIMAP%d", ::g->wbs->epsd);
-
+	} else {
+		snprintf(name, 20, "WIMAP%d", ::g->wbs->epsd);
+		name[19] = 0;
+	}
 	if ( ::g->gamemode == retail )
 	{
 		if (::g->wbs->epsd == 3)
@@ -1542,7 +1543,8 @@ void WI_loadData(void)
 		::g->lnames = (patch_t **) DoomLib::Z_Malloc(sizeof(patch_t*) * ::g->NUMCMAPS, PU_LEVEL_SHARED, 0);
 		for (i=0 ; i < ::g->NUMCMAPS ; i++)
 		{								
-			sprintf(name, "CWILV%2.2d", i);
+			snprintf(name, 20, "CWILV%2.2d", i);
+			name[19] = 0;
 			::g->lnames[i] = (patch_t*)W_CacheLumpName(name, PU_LEVEL_SHARED);
 		}					
 	}
@@ -1551,7 +1553,8 @@ void WI_loadData(void)
 		::g->lnames = (patch_t **) DoomLib::Z_Malloc(sizeof(patch_t*) * ( NUMMAPS ), PU_LEVEL_SHARED, 0);
 		for (i=0 ; i<NUMMAPS ; i++)
 		{
-			sprintf(name, "WILV%d%d", ::g->wbs->epsd, i);
+			snprintf(name, 20, "WILV%d%d", ::g->wbs->epsd, i);
+			name[19] = 0;
 			::g->lnames[i] = (patch_t*)W_CacheLumpName(name, PU_LEVEL_SHARED);
 		}
 
@@ -1575,7 +1578,8 @@ void WI_loadData(void)
 					if (::g->wbs->epsd != 1 || j != 8) 
 					{
 						// animations
-						sprintf(name, "WIA%d%.2d%.2d", ::g->wbs->epsd, j, i);  
+						snprintf(name, 20, "WIA%d%.2d%.2d", ::g->wbs->epsd, j, i);
+						name[19] = 0;
 						a->p[i] = (patch_t*)W_CacheLumpName(name, PU_LEVEL_SHARED);
 					}
 					else
@@ -1594,7 +1598,7 @@ void WI_loadData(void)
 	for (i=0;i<10;i++)
 	{
 		// numbers 0-9
-		sprintf(name, "WINUM%d", i);     
+		snprintf(name, 10, "WINUM%d", i); name[9] = 0;
 		::g->num[i] = (patch_t*)W_CacheLumpName(name, PU_LEVEL_SHARED);
 	}
 
@@ -1651,11 +1655,11 @@ void WI_loadData(void)
 	for (i=0 ; i<MAXPLAYERS ; i++)
 	{
 		// "1,2,3,4"
-		sprintf(name, "STPB%d", i);      
+		snprintf(name, 10, "STPB%d", i); name[9] = 0;
 		::g->wistuff_p[i] = (patch_t*)W_CacheLumpName(name, PU_LEVEL_SHARED);
 
 		// "1,2,3,4"
-		sprintf(name, "WIBP%d", i+1);     
+		snprintf(name, 10, "WIBP%d", i+1); name[9] = 0;
 		::g->wistuff_bp[i] = (patch_t*)W_CacheLumpName(name, PU_LEVEL_SHARED);
 	}
 

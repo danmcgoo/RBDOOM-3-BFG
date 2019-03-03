@@ -33,6 +33,10 @@ If you have questions concerning this license or the applicable additional terms
 
 dmapGlobals_t	dmapGlobals;
 
+#ifndef PATH_MAX
+#define PATH_MAX 4096
+#endif
+
 /*
 ============
 ProcessModel
@@ -214,7 +218,7 @@ void Dmap( const idCmdArgs& args )
 {
 	int			i;
 	int			start, end;
-	char		path[1024];
+	char		path[PATH_MAX];
 	idStr		passedName;
 	bool		leaked = false;
 	bool		noCM = false;
@@ -361,7 +365,8 @@ void Dmap( const idCmdArgs& args )
 	// if this isn't a regioned map, delete the last saved region map
 	if( passedName.Right( 4 ) != ".reg" )
 	{
-		sprintf( path, "%s.reg", dmapGlobals.mapFileBase );
+		snprintf( path, PATH_MAX, "%s.reg", dmapGlobals.mapFileBase );
+		path[PATH_MAX-1] = 0;
 		fileSystem->RemoveFile( path );
 	}
 	else
@@ -373,7 +378,8 @@ void Dmap( const idCmdArgs& args )
 	passedName = stripped;
 	
 	// delete any old line leak files
-	sprintf( path, "%s.lin", dmapGlobals.mapFileBase );
+	snprintf( path, PATH_MAX, "%s.lin", dmapGlobals.mapFileBase );
+	path[PATH_MAX-1] = 0;
 	fileSystem->RemoveFile( path );
 	
 	// delete any old generated binary proc files
